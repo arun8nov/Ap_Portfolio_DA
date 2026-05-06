@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest portfolio-website --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(cd /d/GIT/Ap_Portfolio_DA/portfolio-website && grep -r \"export default\" components/sections/ | head -10)",
+      "Read(//d/d/GIT/Ap_Portfolio_DA/portfolio-website/components/**)",
+      "Bash(npm list *)",
+      "Bash(node -e \"const Icons = require\\('lucide-react'\\); console.log\\('GitHub:', !!Icons.GitHub\\); console.log\\('LinkedIn:', !!Icons.LinkedIn\\); console.log\\('Wrench:', !!Icons.Wrench\\); console.log\\('Settings:', !!Icons.Settings\\);\")"
+    ]
+  }
+}
