@@ -2,12 +2,17 @@
 
 Vercel-compatible Next.js portfolio built from scratch.
 
-## Run
-npm install
-npm run dev
+## Run locally
+1. npm install
+2. npm run dev
+
+## Deploy on Vercel
+- Framework preset: **Next.js**
+- Root directory: repository root
+- Build command: `npm run build`
 
 ## Assets (no copying)
-- Images and resumes are served directly from the repository root folders using Next.js route handlers:
+- Images and resumes are served directly from repository root folders using route handlers:
   - `/assets/images/*` → `Images/*`
   - `/assets/resumes/*` → `resumes/*`
-- This avoids symlinks (which can fail on Vercel output) and still avoids duplicating files.
+- No symlinks are used (prevents Vercel static output issues).
