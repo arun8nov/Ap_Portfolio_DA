@@ -1,28 +1,42 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const IMAGE_ROOT = path.join(process.cwd(), 'Images');
+const IMAGE_ROOT = path.resolve(process.cwd(), 'Images');
 
-const contentTypeByExt: Record<string, string> = {
+const CONTENT_TYPE_BY_EXT: Record<string, string> = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
 };
 
-export async function GET(_: Request, { params }: { params: { path: string[] } }) {
-  const relPath = params.path.join('/');
-  const absolutePath = path.resolve(IMAGE_ROOT, relPath);
+function resolveSafePath(root: string, parts: string[]): string | null {
+  const relPath = parts.join('/');
+  const absolutePath = path.resolve(root, relPath);
+  const normalizedRoot = `${root}${path.sep}`;
+  const isInsideRoot = absolutePath === root || absolutePath.startsWith(normalizedRoot);
+  return isInsideRoot ? absolutePath : null;
+}
 
-  if (!absolutePath.startsWith(IMAGE_ROOT)) {
+export async function GET(_: Request, context: { params: Promise<{ path: string[] }> }) {
+  const { path: parts } = await context.params;
+  const absolutePath = resolveSafePath(IMAGE_ROOT, parts);
+
+  if (!absolutePath) {
     return new Response('Invalid path', { status: 400 });
   }
 
   try {
-    const data = await fs.readFile(absolutePath);
+    const fileData = await fs.readFile(absolutePath);
     const ext = path.extname(absolutePath).toLowerCase();
-    const contentType = contentTypeByExt[ext] ?? 'application/octet-stream';
-    return new Response(data, { headers: { 'content-type': contentType, 'cache-control': 'public, max-age=31536000, immutable' } });
+    const contentType = CONTENT_TYPE_BY_EXT[ext] ?? 'application/octet-stream';
+
+    return new Response(fileData, {
+      headers: {
+        'content-type': contentType,
+        'cache-control': 'public, max-age=31536000, immutable',
+      },
+    });
   } catch {
     return new Response('Not found', { status: 404 });
   }
