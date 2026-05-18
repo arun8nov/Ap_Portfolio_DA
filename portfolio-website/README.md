@@ -179,6 +179,16 @@ Set these in Vercel Project Settings:
 
 Do **not** use the repository root as the project root for this app.
 
+
+### Troubleshooting Vercel Deploy
+
+If `/api/contact` returns `404` after you moved files:
+
+- Confirm API route file exists at `portfolio-website/app/api/contact/route.ts`
+- Confirm Vercel **Root Directory** is `portfolio-website`
+- Confirm Vercel env var is set as `GOOGLE_SHEETS_URL` (Production/Preview as needed)
+- Redeploy after changing Root Directory or environment variables
+
 1. **Push to GitHub**
    ```bash
    git add .
