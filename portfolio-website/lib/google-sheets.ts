@@ -6,27 +6,25 @@ export interface ContactFormData {
 
 export async function submitToGoogleSheets(data: ContactFormData): Promise<{ success: boolean; error?: string }> {
   try {
-    // Google Apps Script Web App URL
-    const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL;
-
-    if (!scriptUrl) {
-      throw new Error("Google Sheets URL not configured");
-    }
-
-    const response = await fetch(scriptUrl, {
+    const response = await fetch("/api/contact", {
       method: "POST",
-      mode: "no-cors", // Required for Google Apps Script
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
 
-    // Since we're using no-cors, we can't read the response
-    // We'll assume success if no error was thrown
+    if (!response.ok) {
+      const result = (await response.json()) as { error?: string };
+      return {
+        success: false,
+        error: result.error || "Failed to submit form",
+      };
+    }
+
     return { success: true };
   } catch (error) {
-    console.error("Error submitting to Google Sheets:", error);
+    console.error("Error submitting contact form:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Failed to submit form",
