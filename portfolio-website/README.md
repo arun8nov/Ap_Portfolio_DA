@@ -165,6 +165,15 @@ This creates an optimized production build in the `.next` directory.
 
 ### Vercel (Recommended)
 
+### Vercel Project Settings (Monorepo)
+
+If you import this repository from the repo root, set:
+
+- **Root Directory**: `portfolio-website`
+- **Framework Preset**: `Next.js`
+
+Alternatively, keep root as-is and use the provided root `vercel.json` so Vercel builds the `portfolio-website` app correctly.
+
 1. **Push to GitHub**
    ```bash
    git add .
