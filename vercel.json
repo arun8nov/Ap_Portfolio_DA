@@ -1,0 +1,14 @@
+{
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "functions": {
+    "app/assets/images/[...path]/route.ts": {
+      "includeFiles": "Images/**"
+    },
+    "app/assets/resumes/[...path]/route.ts": {
+      "includeFiles": "resumes/**"
+    }
+  }
+}
