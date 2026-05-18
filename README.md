@@ -7,6 +7,7 @@ npm install
 npm run dev
 
 ## Assets (no copying)
-- Uses existing assets directly via symlinks:
-  - public/Images -> ../Images
-  - public/resumes -> ../resumes
+- Images and resumes are served directly from the repository root folders using Next.js route handlers:
+  - `/assets/images/*` → `Images/*`
+  - `/assets/resumes/*` → `resumes/*`
+- This avoids symlinks (which can fail on Vercel output) and still avoids duplicating files.
