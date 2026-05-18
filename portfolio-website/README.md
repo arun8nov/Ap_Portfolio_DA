@@ -79,7 +79,7 @@ portfolio-website/
 Create a `.env.local` file in the root directory:
 
 ```env
-NEXT_PUBLIC_GOOGLE_SHEETS_URL=your-google-apps-script-url
+GOOGLE_SHEETS_URL=your-google-apps-script-url
 NEXT_PUBLIC_GITHUB_URL=https://github.com/arun8nov
 NEXT_PUBLIC_LINKEDIN_URL=https://linkedin.com/in/arun8nov
 ```
@@ -114,7 +114,7 @@ NEXT_PUBLIC_LINKEDIN_URL=https://linkedin.com/in/arun8nov
    - Copy the web app URL
 
 3. **Add URL to environment variables**
-   - Paste the URL in `NEXT_PUBLIC_GOOGLE_SHEETS_URL`
+   - Paste the URL in `GOOGLE_SHEETS_URL`
 
 ### Customizing Content
 
@@ -164,6 +164,20 @@ This creates an optimized production build in the `.next` directory.
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
+### Vercel Project Settings (Monorepo)
+
+This repository is a monorepo and the Next.js app lives in `portfolio-website/`.
+If Vercel is pointed at the repo root, it will fail with **"No Next.js version detected"**.
+
+Set these in Vercel Project Settings:
+
+- **Root Directory**: `portfolio-website`
+- **Framework Preset**: `Next.js`
+- **Install Command**: `npm install` (leave default)
+- **Build Command**: `npm run build` (leave default)
+
+Do **not** use the repository root as the project root for this app.
 
 1. **Push to GitHub**
    ```bash
