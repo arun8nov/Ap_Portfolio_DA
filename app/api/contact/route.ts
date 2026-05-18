@@ -1,36 +1,30 @@
-import { NextResponse } from "next/server";
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  message: string;
-}
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
+  const data = await request.json();
+  const scriptUrl = process.env.GOOGLE_SHEETS_SCRIPT_URL;
+
+  if (!scriptUrl) {
+    return NextResponse.json({ error: 'Contact endpoint not configured.' }, { status: 500 });
+  }
+
+  if (!data?.name || !data?.email || !data?.message) {
+    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+  }
+
   try {
-    const scriptUrl = process.env.GOOGLE_SHEETS_URL;
-
-    if (!scriptUrl) {
-      return NextResponse.json({ error: "Server is not configured for contact form submissions." }, { status: 500 });
-    }
-
-    const payload = (await request.json()) as ContactFormData;
-
-    if (!payload.name?.trim() || !payload.email?.trim() || !payload.message?.trim()) {
-      return NextResponse.json({ error: "Name, email, and message are required." }, { status: 400 });
-    }
-
-    await fetch(scriptUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-      cache: "no-store",
+    const response = await fetch(scriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     });
 
+    if (!response.ok) {
+      throw new Error('Google Apps Script request failed');
+    }
+
     return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Failed to submit form." }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to send contact entry.' }, { status: 500 });
   }
 }
