@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-white/10 bg-black/50 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-12">
+      <div className="page-container py-12">
         <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
           {/* Name */}
           <motion.div

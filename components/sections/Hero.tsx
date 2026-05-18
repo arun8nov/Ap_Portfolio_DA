@@ -60,7 +60,7 @@ export default function Hero() {
         transition={{ delay: 2 }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 lg:px-16 text-center">
+      <div className="relative z-10 page-container text-center">
         <motion.div
           variants={containerVariants}
           initial="hidden"

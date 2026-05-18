@@ -13,8 +13,8 @@ const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
         ref={ref}
         id={id}
         className={cn(
-          "py-20 px-4 md:px-8 lg:px-16",
-          fullWidth ? "w-full" : "max-w-7xl mx-auto",
+          "py-20",
+          fullWidth ? "w-full px-4 md:px-8 lg:px-16" : "page-container" ,
           className
         )}
         {...props}

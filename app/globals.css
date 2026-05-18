@@ -113,3 +113,21 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+
+.page-container {
+  width: min(100% - 2rem, 80rem);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    width: min(100% - 4rem, 80rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-container {
+    width: min(100% - 8rem, 80rem);
+  }
+}
